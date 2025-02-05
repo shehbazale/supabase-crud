@@ -23,7 +23,7 @@ export const deleteData = async (id: number) => {
     return true; 
 };
 
- export const updateData = async (id: number | null, updatedData: { province: string; city: string; rating: string }) => {
+ export const updateData = async (id: number | null, updatedData:any) => {
     try {
         const { data, error } = await supabase
             .from('rating') 

@@ -11,29 +11,29 @@ interface EditData {
     city: string;
     rating: string;
 }
+
 const RatingDetail = () => {
     const [data, setData] = useState<any[]>([]);
     const [editModal, setEditModal] = useState<Boolean>(false);
     const [loading, setLoading] = useState<Boolean>(true);
-const [editData, setEditData] = useState<EditData>({
-    id: null,  
-    province: "",
-    city: "",
-    rating: ""
-});
+    const [editData, setEditData] = useState<EditData>({
+        id: null,
+        province: "",
+        city: "",
+        rating: ""
+    });
 
-const router  = useRouter();
+    const router = useRouter();
     useEffect(() => {
 
         const checkUser = async () => {
             const { data: { user } } = await supabase.auth.getUser();
-            if (!user) 
-                {
-                    router.push('/auth/login');
-                }
-                else{
-                    setLoading(false)    
-                }
+            if (!user) {
+                router.push('/auth/login');
+            }
+            else {
+                setLoading(false)
+            }
         };
         const fetchData = async () => {
             const response = await getData()
@@ -44,22 +44,20 @@ const router  = useRouter();
         checkUser()
         fetchData()
     }, [])
-        console.log("edit data", editData)
+    
     const handleDelete = async (id: number) => {
         const result = await deleteData(id);
         if (result) {
-            alert('Rating deleted successfully');
+            alert('Data deleted successfully');
             setData((prevData) => prevData.filter((item) => item.id !== id))
         }
     }
-
     const handleEdit = (item: any) => {
         setEditData(item);
         setEditModal(true);
     };
 
     const handleUpdate = async (updatedData: any) => {
-        console.log("updatedData", updatedData)
         const result = await updateData(updatedData.id, updatedData);
         console.log("result", result)
         if (result) {
@@ -67,14 +65,14 @@ const router  = useRouter();
             setEditModal(false);
         }
     };
-    
+
     if (loading) {
         return (
-          <div className="flex justify-center items-center h-screen">
-            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
-          </div>
+            <div className="flex justify-center items-center h-screen">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+            </div>
         );
-      }
+    }
 
     return (
         <>
@@ -118,7 +116,7 @@ const router  = useRouter();
                     handleUpdate={handleUpdate}
                     closeModal={() => setEditModal(false)}
                 />
-)}
+            )}
         </>
     );
 };
