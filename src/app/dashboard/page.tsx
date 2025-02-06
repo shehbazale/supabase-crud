@@ -5,6 +5,7 @@ import { columns } from "../constants/column";
 import supabase from "../config/supabase";
 import { useRouter } from "next/navigation";
 import EditModal from "../components/EditModel";
+import Header from "../components/Header";
 interface EditData {
     id: number | null;
     province: string;
@@ -76,6 +77,7 @@ const RatingDetail = () => {
 
     return (
         <>
+        <Header/>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg mx-20 mt-24">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <caption className="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">

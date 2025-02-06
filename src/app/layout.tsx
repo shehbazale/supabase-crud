@@ -30,22 +30,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const [header, setHeader] = useState<Boolean>(true);
-  const pathname = usePathname();
-  useEffect(() => {
-      if(pathname.startsWith('/auth')){
-        setHeader(false)
-      }else{
-        setHeader(true)
-      }
-  }, [pathname])
+  // const [header, setHeader] = useState<Boolean>(true);
+  // const pathname = usePathname();
+  // useEffect(() => {
+  //     if(pathname.startsWith('/auth')){
+  //       setHeader(false)
+  //     }else{
+  //       setHeader(true)
+  //     }
+  // }, [pathname])
   return (
     <html lang="en" className='light'>
       <body
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
       <Providers>
-        {header && <Header/>}
+        {/* {header && <Header/>} */}
         {children}
       </Providers>
       </body>
