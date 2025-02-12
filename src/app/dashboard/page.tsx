@@ -6,6 +6,10 @@ import supabase from "../config/supabase";
 import { useRouter } from "next/navigation";
 import EditModal from "../components/EditModel";
 import Header from "../components/Header";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 interface EditData {
     id: number | null;
     province: string;
@@ -29,6 +33,7 @@ const RatingDetail = () => {
 
         const checkUser = async () => {
             const { data: { user } } = await supabase.auth.getUser();
+            // console.log("user",user )
             if (!user) {
                 router.push('/auth/login');
             }
@@ -46,13 +51,37 @@ const RatingDetail = () => {
         fetchData()
     }, [])
     
+    // const handleDelete = async (id: number) => {
+    //     if (confirm('Are you sure you want to delete this data?')) {
+    //         const result = await deleteData(id);
+    //         if (result) {
+    //             toast.success('Data deleted successfully');
+    //             setData((prevData) => prevData.filter((item) => item.id !== id));
+    //         }
+    //     }
+    // }
+
     const handleDelete = async (id: number) => {
-        const result = await deleteData(id);
-        if (result) {
-            alert('Data deleted successfully');
-            setData((prevData) => prevData.filter((item) => item.id !== id))
-        }
-    }
+        confirmAlert({
+            title: 'Confirm Deletion',
+            message: 'Are you sure you want to delete this data?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: async () => {
+                        const result = await deleteData(id);
+                        if (result) {
+                            toast.success('Data deleted successfully');
+                            setData((prevData) => prevData.filter((item) => item.id !== id));
+                        }
+                    }
+                },
+                {
+                    label: 'No'
+                }
+            ]
+        });
+    };
     const handleEdit = (item: any) => {
         setEditData(item);
         setEditModal(true);
@@ -60,8 +89,9 @@ const RatingDetail = () => {
 
     const handleUpdate = async (updatedData: any) => {
         const result = await updateData(updatedData.id, updatedData);
-        console.log("result", result)
+        // console.log("result", result)
         if (result) {
+            toast.success("Data updated successfully")
             setData((prevData) => prevData.map((item) => (item.id === updatedData.id ? updatedData : item)));
             setEditModal(false);
         }
@@ -78,6 +108,7 @@ const RatingDetail = () => {
     return (
         <>
         <Header/>
+        <ToastContainer/>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg mx-20 mt-24">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <caption className="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">

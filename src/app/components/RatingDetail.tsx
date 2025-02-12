@@ -37,7 +37,7 @@ const router  = useRouter();
         checkUser()
         fetchData()
     }, [])
-        console.log("edit data", editData)
+        // console.log("edit data", editData)
     const handleDelete = async (id: number) => {
         const result = await deleteData(id);
         if (result) {

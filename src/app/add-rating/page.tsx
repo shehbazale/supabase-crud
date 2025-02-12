@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { addData } from '../config/actions';
 import { useRouter } from 'next/navigation';
 import Header from '../components/Header';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddRating = () => {
     const [province, setProvince] = useState('');
@@ -14,6 +16,7 @@ const AddRating = () => {
         e.preventDefault();
         try {
             await addData(province, city, Number(rating));
+            toast.success("Data added successfully")
             setProvince('');
             setCity('');
             setRating('');
@@ -27,6 +30,7 @@ const AddRating = () => {
         <>
     
         <Header/>
+        <ToastContainer/>
         <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
             <h2 className="text-2xl font-bold mb-4">Add Rating</h2>
             <div className="mb-4">
